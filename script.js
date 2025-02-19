@@ -1,31 +1,21 @@
-document.addEventListener("DOMContentLoaded", function () {
-    emailjs.init("KPm55EhJ4r9KYlQnF"); 
-});
-
-async function sendAppointmentEmail(event) {
+function sendAppointmentEmail(event) {
     event.preventDefault();
 
     const name = document.getElementById("name").value;
     const phone = document.getElementById("phone").value;
-    const date = document.getElementById("datepicker").value;
+    const datepicker = document.getElementById("datepicker").value;
     const time = document.getElementById("time").value;
 
-    const templateParams = {
-        name: name,
-        phone: phone,
-        date: date,
-        time: time,
-        email_to: "info@navipromotions.in" 
-    };
-
-    try {
-        const response = await emailjs.send("service_yjvv6ma", "template_ceehjxu", templateParams);
-        alert("Appointment request sent successfully!");
-    } catch (error) {
-        console.error("EmailJS error:", error);
-        alert("Failed to send appointment request. Please try again.");
-    }
+    fetch("http://localhost:5000/send-whatsapp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, datepicker, time }),
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error("Error:", error));
 }
+
 
 function downloadImage() {
     const imageUrl = "assets/images/main-img/scanner-img.png";
