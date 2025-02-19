@@ -6,7 +6,7 @@ function sendAppointmentEmail(event) {
     const datepicker = document.getElementById("datepicker").value;
     const time = document.getElementById("time").value;
 
-    fetch("http://localhost:5000/send-whatsapp", {
+    fetch("https://digital-card-i1ws.onrender.com/send-whatsapp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone, datepicker, time }),
